@@ -1,5 +1,5 @@
 <template>
   <p>
-    TOP SECRET!!!!
+    TOP SECRET!!!! Only for authorized users.
   </p>
 </template>
