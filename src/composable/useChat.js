@@ -3,7 +3,8 @@ import {
     collection,
     query,
     orderBy,
-    onSnapshot
+    onSnapshot,
+    addDoc,
 } from 'firebase/firestore'
 
 import { db } from './useFirebase'
@@ -25,7 +26,15 @@ const useChat = () => {
         })
     })
 
-    return { messages, unsubscribe }
+    const sendMessage = async message => {
+        await addDoc(chatCollection, {
+          text: message,
+          author: user.value,
+          createdAt: new Date(),
+        })
+    }
+
+    return { messages, unsubscribe, sendMessage }
 }
 
 export default useChat
