@@ -1,3 +1,16 @@
+<script setup>
+  import { onUnmounted, ref } from 'vue'
+  import useChat from '../composable/useChat'
+
+  const { messages, unsubscribe } = useChat()
+
+  const newMessage = ref('')
+
+  onUnmounted(() => {
+    unsubscribe()
+  })
+</script>
+
 <template>
   <h1 class="mt-8 text-6xl font-thin tracking-tighter text-center">Cool Chat</h1>
   <div class="
@@ -10,14 +23,20 @@
       justify-between
     ">
     <ul class="p-4 space-y-4">
-      <li v-for="n in 5" >
+      <li v-for="message in messages" :key="message.id" >
         <div class="flex justify-between px-4 py-2 bg-gray-200 rounded-lg">
-          <span>Message itself</span><span>by Author Name</span>
+          <span>{{ message.text }}</span>
+          <span>by {{ message.author }}</span>
         </div>
       </li>
     </ul>
     <div>
-      <input  class="w-full p-4 rounded-lg focus:outline-none focus:bg-yellow-200" type="text" placeholder="Type a message...">
+      <input  
+      class="w-full p-4 rounded-lg focus:outline-none focus:bg-yellow-200" 
+      type="text" 
+      placeholder="Type a message..."
+       v-model="newMessage"
+      >
     </div>
   </div>
 </template>
